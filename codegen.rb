@@ -152,13 +152,16 @@ class CodeGen
     # Step through each of the variants that need to be produced
     variants = self.get_variants
     variants.each do |variant|
+      puts "Variant: #{variant}"
 
       files.each do |file|
 
         # Generate any file dependant variables
-        include_guard = file.upcase.gsub(/[ \t]+/, "_")
-        header_name = "#{file}.h"
-        object_name = file.capitalize.gsub(/[ \t]+/, "")
+        file_specific = Hash.new
+        file_specific["include_guard"] = file.upcase.gsub(/[ \t]+/, "_")
+        file_specific["header"] = "#{file}.h"
+        file_specific["object_name"] = file.capitalize.gsub(/[ \t]+/, "")
+        file_specific["license"] = license
 
         # Determine which variants we need
         if self.user_config["ignore-header"] == "no" && self.definitions["has-header"] == "yes"
@@ -166,10 +169,7 @@ class CodeGen
           header_extension = self.definitions["header-extension"]
           header_name = "#{file}.#{header_extension}"
           header_file = FileLoader.new("templates/languages/#{language}/#{variant}.#{header_extension}")
-          header_file.apply("license", license)
-          header_file.apply("header", header_name)
-          header_file.apply("include_guard", include_guard)
-          header_file.apply("object_name", object_name)
+          header_file.apply_hash file_specific
           header_file.apply_hash self.user_config
           header_file.export("#{header_path}/#{file}.#{header_extension}")
         end
@@ -178,10 +178,7 @@ class CodeGen
           # Generate a source file for this variant
           source_extension = self.definitions["source-extension"]
           source_file = FileLoader.new("templates/languages/#{language}/#{variant}.#{source_extension}")
-          source_file.apply("license", license)
-          source_file.apply("header", header_name)
-          source_file.apply("include_guard", include_guard)
-          source_file.apply("object_name", object_name)
+          source_file.apply_hash file_specific
           source_file.apply_hash self.user_config
           source_file.export("#{source_path}/#{file}.#{source_extension}")
         end
