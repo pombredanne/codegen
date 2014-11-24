@@ -1,0 +1,9 @@
+[unix]
+shebang = "/usr/bin/sh"
+
+[comments]
+comment = "#"
+
+[file-types]
+has-header = "no"
+source-extension = "sh"

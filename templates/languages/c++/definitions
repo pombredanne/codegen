@@ -1,0 +1,7 @@
+[comments]
+comment = "//"
+
+[file-types]
+has-header = "yes"
+source-extension = "cpp"
+header-extension = "hpp"

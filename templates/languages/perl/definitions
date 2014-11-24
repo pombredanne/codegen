@@ -1,0 +1,9 @@
+[unix]
+shebang = "/usr/bin/perl"
+
+[comments]
+comment = "#"
+
+[file-types]
+has-header = "no"
+source-extension = "pl"

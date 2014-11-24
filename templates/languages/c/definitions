@@ -1,0 +1,7 @@
+[comments]
+comment = "//"
+
+[file-types]
+has-header = "yes"
+header-extension = "h"
+source-extension = "c"
