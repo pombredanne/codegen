@@ -158,7 +158,7 @@ class CodeGen
         # Generate any file dependant variables
         include_guard = file.upcase.gsub(/[ \t]+/, "_")
         header_name = "#{file}.h"
-        object_name = file.gsub(/[ \t]+/, " ")
+        object_name = file.capitalize.gsub(/[ \t]+/, "")
 
         # Determine which variants we need
         if self.user_config["ignore-header"] == "no" && self.definitions["has-header"] == "yes"
