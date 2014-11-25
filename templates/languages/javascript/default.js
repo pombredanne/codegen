@@ -1,0 +1,7 @@
+%%LICENSE%%
+
+(function(){
+
+	// ... code here ...
+
+})();
