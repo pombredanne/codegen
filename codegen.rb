@@ -178,6 +178,13 @@ class CodeGen
           # Generate a source file for this variant
           source_extension = self.definitions["source-extension"]
           source_file = FileLoader.new("templates/languages/#{language}/#{variant}.#{source_extension}")
+
+          # Does the file require a shebang?
+          if self.definitions.has_key? "shebang"
+            shebang = self.definitions["shebang"]
+            source_file.prepend_line("#!#{shebang}")
+          end
+
           source_file.apply_hash file_specific
           source_file.apply_hash self.user_config
           source_file.export("#{source_path}/#{file}.#{source_extension}")
@@ -315,6 +322,11 @@ class FileLoader
   def export(path)
     puts "Exporting #{path} "
     File.write(path, self.data)
+  end
+
+  # Prepend some text to the beginning of the file data.
+  def prepend_line(text)
+    self.data = "#{text}\n" + self.data
   end
 end
 
