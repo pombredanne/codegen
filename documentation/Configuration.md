@@ -1,4 +1,4 @@
-#Global Configuration & Language Definitions
+#Global Configuration
 This document details the creation and setup of the `~/.codegen` file for your current user account in order to apply a number of default settings to codegen.
 
 ##Basic Syntax
