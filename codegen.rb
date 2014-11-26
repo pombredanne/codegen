@@ -78,8 +78,6 @@ class CodeGen
     self.user_config["name"] = "Unknown"
     self.user_config["email"] = ""
     self.user_config["path"] = "."
-    self.user_config["header-path"] = "."
-    self.user_config["source-path"] = "."
     self.user_config["ignore-header"] = "no"
     self.user_config["ignore-source"] = "no"
     self.user_config["year"] = Date.today.strftime("%Y")
@@ -103,8 +101,10 @@ class CodeGen
 
   # Parse and interpret a single argument
   def parse_argument(arg)
-    components = arg.split(/\-|\=/)
-    self.user_config[components[1]] = components[2]
+    components = arg.split(/\=/)
+    key = components[0][1..-1]
+    value = components[1]
+    self.user_config[key] = value
   end
 
 
@@ -145,15 +145,18 @@ class CodeGen
   # Construct the variants of the specified file
   def construct_source_files(files)
     language = self.user_config["lang"]
-    header_path = self.user_config["header-path"]
-    source_path = self.user_config["source-path"]
+    source_path = self.user_config["path"]
+    header_path = self.user_config["path"]
+
+    if self.user_config.has_key? "header-path"
+      header_path = self.user_config["header-path"]
+    end
+
     license = self.build_license
 
     # Step through each of the variants that need to be produced
     variants = self.get_variants
     variants.each do |variant|
-      puts "Variant: #{variant}"
-
       files.each do |file|
 
         # Generate any file dependant variables
@@ -320,7 +323,7 @@ class FileLoader
 
   # Export the file out to the specified location
   def export(path)
-    puts "Exporting #{path} "
+    puts "\033[32mCreating #{path}\033[0m"
     File.write(path, self.data)
   end
 
