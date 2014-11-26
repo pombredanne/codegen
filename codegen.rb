@@ -161,9 +161,9 @@ class CodeGen
 
         # Generate any file dependant variables
         file_specific = Hash.new
-        file_specific["include_guard"] = file.upcase.gsub(/[ \t]+/, "_")
+        file_specific["include_guard"] = file.upcase.gsub(/[ \t-]+/, "_")
         file_specific["header"] = "#{file}.h"
-        file_specific["object_name"] = file.capitalize.gsub(/[ \t]+/, "")
+        file_specific["object_name"] = file.capitalize.gsub(/[ \t-]+/, "")
         file_specific["license"] = license
 
         # Determine which variants we need
