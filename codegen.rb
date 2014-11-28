@@ -57,6 +57,7 @@ class CodeGen
     # in this order to ensure the correct information is applied.
     self.load_base_configuration
     self.load_home_configuration
+    self.load_project_configuration
     self.load_arguments_configuration
 
     # load the requested language definitions.
@@ -88,6 +89,17 @@ class CodeGen
   def load_home_configuration
     home_config = ConfigurationFile.new("~/.codegen")
     self.user_config = self.user_config.merge(home_config.result)
+  end
+
+  # This will look for any configuration files (.codegen) and load them.
+  # The order will be that of how the system provides the files.
+  # Due to this uncertainty across multiple platforms, then it is recommended
+  # that only one project level configuration is used.
+  # It should be noted that this is more of a current directory configuration
+  # rather than true project configuration.
+  def load_project_configuration
+    project_files = Dir.glob("*.codegen", File::FNM_DOTMATCH)
+    project_files.each { |file| self.user_config = self.user_config.merge(ConfigurationFile.new(file).result) }
   end
 
   #
