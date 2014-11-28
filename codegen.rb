@@ -161,9 +161,9 @@ class CodeGen
 
         # Generate any file dependant variables
         file_specific = Hash.new
-        file_specific["include_guard"] = file.upcase.gsub(/[ \t-]+/, "_")
+        file_specific["include_guard"] = self.symbolicate(file.upcase)
         file_specific["header"] = "#{file}.h"
-        file_specific["object_name"] = file.capitalize.gsub(/[ \t-]+/, "")
+        file_specific["object_name"] = self.symbolicate(file.capitalize, "")
         file_specific["license"] = license
 
         # Determine which variants we need
@@ -196,6 +196,11 @@ class CodeGen
       end
 
     end
+  end
+
+  # Given a string, returns a Symbolicated version of that string
+  def symbolicate(name, substitution = '_')
+    return name.gsub(/\W+/, substitution)
   end
 end
 
