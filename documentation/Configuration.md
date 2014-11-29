@@ -1,6 +1,10 @@
 #Global Configuration
 This document details the creation and setup of the `~/.codegen` file for your current user account in order to apply a number of default settings to codegen.
 
+As of version 0.2 and later, you may also add `.codegen` files to project directories. codegen will search for these
+files inside the directory it is executed from. These files will override the `~/.codegen` file, but superceded by
+the command line arguments.
+
 ##Basic Syntax
 The basic syntax and layout of a Configuration and Definitions files is as follows
 
