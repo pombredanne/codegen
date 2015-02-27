@@ -199,7 +199,7 @@ class CodeGen
         if self.user_config["ignore-source"] == "no"
           # Generate a source file for this variant
           source_extension = self.definitions["source-extension"]
-          source_file = FileLoader.new("templates/languages/#{language}/#{variant}.#{source_extension}")
+          source_file = FileLoader.new(path = "templates/languages/#{language}/#{variant}.#{source_extension}")
 
           # Does the file require a shebang?
           if self.definitions.has_key? "shebang"
@@ -209,7 +209,15 @@ class CodeGen
 
           source_file.apply_hash file_specific
           source_file.apply_hash self.user_config
-          source_file.export("#{source_path}/#{file}.#{source_extension}")
+          
+          filename = ""
+          if self.list_contains_string(self.definitions["no-extension-on-name"], file)
+            filename = "#{file}"
+          else
+            filename = "#{file}.#{source_extension}"
+          end
+
+          source_file.export("#{source_path}/#{filename}")
         end
 
       end
@@ -220,6 +228,16 @@ class CodeGen
   # Given a string, returns a Symbolicated version of that string
   def symbolicate(name, substitution = '_')
     return name.gsub(/\W+/, substitution)
+  end
+
+  # Given a comma delimited list, check to see if another string is included.
+  def list_contains_string(list, string, delimiter = ",")
+    unless list.nil?
+      components = list.split(delimiter)
+      return components.include? string
+    else
+      return false
+    end
   end
 end
 

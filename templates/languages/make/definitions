@@ -4,3 +4,4 @@ comment = "#"
 [file-types]
 has-header = "no"
 source-extension = "make"
+no-extension-on-name = "Makefile"
