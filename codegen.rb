@@ -83,6 +83,7 @@ class CodeGen
     self.user_config["ignore-source"] = "no"
     self.user_config["year"] = Date.today.strftime("%Y")
     self.user_config["variants"] = "default"
+    self.user_config["prefer-block-comments"] = "no"
   end
 
   #
@@ -149,7 +150,13 @@ class CodeGen
     license_name = self.user_config['license'].upcase
     license = FileLoader.new("templates/licenses/#{license_name}")
     license.apply_hash(self.user_config)
-    license.comment_out(self.definitions['comment'])
+
+    if self.user_config["prefer-block-comments"] == "yes" && self.definitions["has-block-comment"] == "yes"
+      license.make_block_comment(self.definitions["block-comment-start"], self.definitions["block-comment-end"])
+    else
+      license.comment_out(self.definitions['comment'])
+    end
+
     return license.data
   end
 
@@ -274,6 +281,8 @@ class ConfigurationFile
   # Extract a value. If the supplied value is a string (wrapped in double quotes) then the
   # inner value will be returned
   def parse_value(value)
+    value.gsub! "\\n", "\n"
+
     first_char = value[0,1]
 
     if first_char == "\""
@@ -336,6 +345,11 @@ class FileLoader
   def comment_out(comment)
     self.sub(/\n/, "\n#{comment} ")
     self.data = "#{comment} " + self.data
+  end
+
+  # Make the entire contents of data a block comment
+  def make_block_comment(prefix, suffix)
+    self.data = "#{prefix}#{self.data}#{suffix}"
   end
 
   # Export the file out to the specified location

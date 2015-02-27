@@ -1,7 +1,7 @@
 [comments]
 comment = "//"
-block-comment-start = "/*"
-block-comment-end = "*/"
+block-comment-start = "/*\n"
+block-comment-end = "\n*/"
 has-block-comment = "yes"
 
 [file-types]
