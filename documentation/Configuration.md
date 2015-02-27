@@ -95,6 +95,15 @@ and the same property when being used on the command line
 
     -path="/dev/null"
 
+####prefer-block-comments
+Whether or not codegen should attempt to use block comments if the language supports them or not. This is a simple yes/no setting.
+    
+    prefer-block-comments = "yes"
+
+and the same property when being used on the command line
+
+    -prefer-block-comments = "yes"
+
 ####variants
 The type of source file you wish to generate. Most templates contain only a default variant, and thus render this property meaningless. This will default to a value of `default`
 
