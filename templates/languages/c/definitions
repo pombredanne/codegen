@@ -1,7 +1,12 @@
 [comments]
 comment = "//"
+block-comment-start = "/*\n"
+block-comment-end = "\n*/"
+has-block-comment = "yes"
 
 [file-types]
 has-header = "yes"
 header-extension = "h"
 source-extension = "c"
+
+[imports]

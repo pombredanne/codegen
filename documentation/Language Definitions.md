@@ -26,13 +26,28 @@ You can specify the shebang to be inserted into a file at the top of the definit
     shebang = "/usr/bin/ruby"
     shebang = "/usr/bin/python"
 
+####block-comment-start
+Tells codegen what to place at the beginning of a block comment.
+
+    block-comment-start = "/*"
+
+####block-comment-end
+Tells codegen what to place at the end of a block comment.
+
+    block-comment-end = "*/"
+
 ####comment
 Tells codegen what to use for singleline comments.
 
     comment = "//"
 
+####has-block-comment
+Tells codegen if the language offers block comments. If this is set to yes then it will attempt to use block comments. This property is assumed to be no. It should be noted that the user can also specify a preference on the use of block comments.
+
+    has-block-comment = "yes"
+
 ####has-header
-Tells codegen if the language make use of header files. If this is set to no then it will not produce any header files for this language. The property is assumed to be no.
+Tells codegen if the language makes use of header files. If this is set to no then it will not produce any header files for this language. The property is assumed to be no.
 
     has-header = "no"
 
